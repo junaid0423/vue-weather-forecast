@@ -1,0 +1,37 @@
+<div class="p-2 h-100 d-flex flex-column justify-content-center">
+  <!-- Current -->
+  <div class="d-flex align-items-center" v-if="!isLoading">
+    <img
+      class="ml-4 mr-3 current-img"
+      :src="getImage(current.weather[0])"
+      alt=""
+    />
+    <div class="d-flex flex-column align-items-start">
+      <h3>{{location.city}}, {{location.country}}</h3>
+      <h4>{{temp(current.temp)}}°</h4>
+      <h5>Humidity: {{current.humidity}}%</h5>
+      <h5>UVI: {{current.uvi}}</h5>
+      <h5>
+        Wind: {{windDirectionDic[Math.round(current.wind_deg/20)]}}
+        {{Math.round(current.wind_speed)}}kmh
+      </h5>
+    </div>
+  </div>
+
+  <!-- Weekly -->
+  <div v-if="!isLoading" class="d-flex row-column m-3">
+    <div
+      class="d-flex column-row m-3 d-row"
+      v-for="(item, index) in nextDays"
+      :key="index"
+    >
+      <label class="day">{{day(item.dt)}}</label>
+      <img class="d-img mb-3" :src="getImage(item.weather[0])" alt="" /><label
+        class="mb-0 hot"
+        for=""
+        >{{temp(item.temp.max)}}°</label
+      >
+      <label for="">{{temp(item.temp.min)}}°</label>
+    </div>
+  </div>
+</div>
